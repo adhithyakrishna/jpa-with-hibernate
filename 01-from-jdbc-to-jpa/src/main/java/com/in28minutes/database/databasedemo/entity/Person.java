@@ -2,26 +2,12 @@ package com.in28minutes.database.databasedemo.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-
-@Entity
-@NamedQuery(name="find_all_persons", query="select p from Person p")
 public class Person {
 
-	@Id
-	@GeneratedValue
 	private int id;
-
 	private String name;
 	private String location;
 	private Date birthDate;
-
-	public Person() {
-
-	}
 
 	public Person(int id, String name, String location, Date birthDate) {
 		super();
@@ -31,11 +17,10 @@ public class Person {
 		this.birthDate = birthDate;
 	}
 
-	public Person(String name, String location, Date birthDate) {
-		super();
-		this.name = name;
-		this.location = location;
-		this.birthDate = birthDate;
+	// when ever a bean property row mapper is used, the bean on which it is used
+	// should have an no argument constructor
+	public Person() {
+
 	}
 
 	public int getId() {
@@ -72,7 +57,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return String.format("\nPerson [id=%s, name=%s, location=%s, birthDate=%s]", id, name, location, birthDate);
+		return "Person [id=" + id + ", name=" + name + ", location=" + location + ", birthDate=" + birthDate + "]";
 	}
 
 }
