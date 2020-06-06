@@ -13,11 +13,12 @@ public class SpringIn5StepsApplication {
 
 	public static void main(String[] args) {
 
-		// BinarySearchImpl binarySearch =
-		// new BinarySearchImpl(new QuickSortAlgorithm());
-		// Application Context
+		//beans can be retrieved from the application context
+		//bean can also be obtained using name and casted
 		ApplicationContext applicationContext = 
 				SpringApplication.run(SpringIn5StepsApplication.class, args);
+		
+		
 		BinarySearchImpl binarySearch = 
 				applicationContext.getBean(BinarySearchImpl.class);
 		int result = 
@@ -25,3 +26,15 @@ public class SpringIn5StepsApplication {
 		System.out.println(result);
 	}
 }
+
+/* 
+Binary search has to sort before it searches for the required value
+Sorting can be done either throught quicksort, bubblesort etc
+instead of manually changing the code, the code can be re written
+as a loosely coupled code using interface, the dependencies can be
+autowired using autowired annotation
+
+Autowiring can be done either by constructor, setter, property
+if there are two components, pertaining to the same interface,
+priority can be given using @primary inteface.
+*/
