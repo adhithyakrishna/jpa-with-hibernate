@@ -32,12 +32,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * table name, after this we dont have to specify it anywhere in the test as
  * well as our repository it will get automatically mapped
  */
-@Table(name = "CourseDetails")
+//@Table(name = "CourseDetails")
 public class Course {
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	/*
+	 * @column - The column in the table name will be converted to fullname
+	 * @nullable - The value in the name cannot be assigned a value of null
+	 */
+	@Column(nullable = false)
 	private String name;
 
 	/*
