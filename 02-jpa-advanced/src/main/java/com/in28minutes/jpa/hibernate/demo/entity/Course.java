@@ -14,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -25,6 +26,13 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+/*
+ * when your underlying database has the table name as coursedetails but you
+ * want the entity to remain as course, we can use @Table entity to display the
+ * table name, after this we dont have to specify it anywhere in the test as
+ * well as our repository it will get automatically mapped
+ */
+@Table(name = "CourseDetails")
 public class Course {
 	@Id
 	@GeneratedValue
