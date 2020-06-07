@@ -25,6 +25,15 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+//To use multiple queries, we should make use of named queries annotation
+@NamedQueries(
+	value = {
+			@NamedQuery(name="query_get_all_courses", query="Select c from Course c"),
+			@NamedQuery(name="query_get_100_step_courses", query="Select c from Course c where name like '%100'")
+	}
+)
+//NamedQuery can be used only once
+
 @Entity
 /*
  * when your underlying database has the table name as coursedetails but you
@@ -40,6 +49,7 @@ public class Course {
 
 	/*
 	 * @column - The column in the table name will be converted to fullname
+	 * 
 	 * @nullable - The value in the name cannot be assigned a value of null
 	 */
 	@Column(nullable = false)
@@ -49,6 +59,23 @@ public class Course {
 	 * JPA expects no arg constructor, mandated by jpa protect because, Other
 	 * classes that do not inherit from course will not make use of the constructor
 	 */
+
+	/*
+	 * Everytime a change is made to a row, the @updateTimestamp updates the row to
+	 * the last updated time, we can say that using an annotation. it is important
+	 * to note that it is an hibernate annotation and if you tend to change your jpa
+	 * implementation, you wont have support for this
+	 */
+
+	@UpdateTimestamp
+	private LocalDateTime lastUpdatedDate;
+
+	/*
+	 * When the row is first created, this is inserted
+	 */
+	@CreationTimestamp
+	private LocalDateTime createdDate;
+
 	protected Course() {
 
 	}
