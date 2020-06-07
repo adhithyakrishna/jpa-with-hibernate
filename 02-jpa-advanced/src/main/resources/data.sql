@@ -1,6 +1,11 @@
-insert into course(id, name) values(10001,'JPA in 50 Steps');
-insert into course(id, name) values(10002,'JPA in 50 Steps 1');
-insert into course(id, name) values(10003,'JPA in 50 Steps 2');
+
+/*
+It is important to note the difference between the the name of createddate in entity and in database
+apparenty it adds underscore between each word, refer video 63 to understand what is going on
+*/
+insert into course(id, name, created_date, last_updated_date) values(10001,'JPA in 50 Steps', sysdate(), sysdate());
+insert into course(id, name, created_date, last_updated_date) values(10002,'JPA in 50 Steps 1', sysdate(), sysdate());
+insert into course(id, name, created_date, last_updated_date) values(10003,'JPA in 50 Steps 2', sysdate(), sysdate());
 
 /*insert into course(id, name, created_date, last_updated_date,is_deleted) 
 values(10001,'JPA in 50 Steps', sysdate(), sysdate(),false);
