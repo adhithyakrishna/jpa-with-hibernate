@@ -1,6 +1,5 @@
 package com.in28minutes.jpa.hibernate.demo;
 
-import java.math.BigDecimal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,5 +29,10 @@ public class DemoApplication implements CommandLineRunner {
 
 		Course course = courseRepository.findById(10001l);
 		logger.info("{}", course);
+		
+		courseRepository.deleteById(10003l);
+		
+		Course savedCourse = courseRepository.save(new Course(" hello world"));
+		logger.info("new added course {}", savedCourse);
 	}
 }
