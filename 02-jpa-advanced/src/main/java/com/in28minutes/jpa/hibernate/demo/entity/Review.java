@@ -18,12 +18,31 @@ public class Review {
 
 	private String description;
 
+	/*
+	 * Many reviews can point to a since course 
+	 * the fetching is always eager 
+	 * 
+	 * anything ending in one is eager fetching
+	 * others are lazy fetching
+	 */
+	
+	@ManyToOne
+	private Course course;
+
 	protected Review() {
 	}
 
 	public Review(String rating, String description) {
 		this.rating = rating;
 		this.description = description;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	public String getDescription() {

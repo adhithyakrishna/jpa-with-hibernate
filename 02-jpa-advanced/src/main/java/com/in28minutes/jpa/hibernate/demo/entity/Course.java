@@ -7,8 +7,10 @@ import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,12 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //To use multiple queries, we should make use of named queries annotation
-@NamedQueries(
-	value = {
-			@NamedQuery(name="query_get_all_courses", query="Select c from Course c"),
-			@NamedQuery(name="query_get_100_step_courses", query="Select c from Course c where name like '%100'")
-	}
-)
+@NamedQueries(value = { @NamedQuery(name = "query_get_all_courses", query = "Select c from Course c"),
+		@NamedQuery(name = "query_get_100_step_courses", query = "Select c from Course c where name like '%100'") })
 //NamedQuery can be used only once
 
 @Entity
@@ -42,6 +40,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 //@Table(name = "CourseDetails")
 public class Course {
+
+	protected Course() {
+
+	}
+
+	public Course(String name) {
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -68,19 +75,47 @@ public class Course {
 
 	@UpdateTimestamp
 	private LocalDateTime lastUpdatedDate;
-
 	/*
 	 * When the row is first created, this is inserted
 	 */
+	
 	@CreationTimestamp
 	private LocalDateTime createdDate;
 
-	protected Course() {
+	/*
+	 * whenever a collection is used, it is advisable to initialise it there itself
+	 * We'll have to look at the relationship annotations on the basis of the entity
+	 * name the name of the entity is course, and the name of the filed is reviews.
+	 * "one" course can have "many" reviews and hence one to many relationship
+	 * 
+	 * by default onetomany relationship is lazy, fetch = FetchType.EAGER
+	 */
 
+	@OneToMany(mappedBy="course")
+	private List<Review> reviews = new ArrayList<Review>();
+
+	
+	/*
+	 * mapped by is added to prevent duplication of joins table 
+	 * now Students is the owning side of the many to many relationship
+	 */
+	@ManyToMany(mappedBy = "courses")
+	private List<Student> students = new ArrayList<>(); 
+	
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public Course(String name) {
-		this.name = name;
+	public void addStudents(Student student) {
+		this.students.add(student);
+	}
+
+	public List<Review> getReviews() {
+		return this.reviews;
+	}
+
+	public void addReview(Review review) {
+		this.reviews.add(review);
 	}
 
 	public Long getId() {

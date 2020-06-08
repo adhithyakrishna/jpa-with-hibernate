@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.DemoApplication;
+import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Passport;
 import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
@@ -71,4 +72,15 @@ public class StudentRepositoryTest {
 		 */
 		logger.info("passport -> {}", student.getPassport());
 	}
+	
+	
+	@Test
+	@Transactional
+	public void retrieveStudentAndCourses() {
+		
+		Student student = em.find(Student.class, 20001L);
+		logger.info("Courses -> {}", student.getCourses());
+	}
+	
+	
 }

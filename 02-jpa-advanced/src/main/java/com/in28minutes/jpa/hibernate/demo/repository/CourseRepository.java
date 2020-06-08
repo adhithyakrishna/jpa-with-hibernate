@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Review;
 
 //Repository is used to communicate with entity manager class
 @Repository
@@ -72,7 +73,7 @@ public class CourseRepository {
 		 * after that, then the entire change made so far would be rolled back
 		 */
 		em.flush();
-
+ 
 		course.setName("Welcome to this world - Again");
 
 		/*
@@ -94,5 +95,17 @@ public class CourseRepository {
 		 * 
 		 */
 		em.clear();
+	}
+
+	public void addReviewsForCourse(Long courseId, List<Review> reviewList) {
+
+		Course course = findById(courseId);
+
+		for (Review review : reviewList) {
+			course.addReview(review);
+			review.setCourse(course);
+			em.persist(review);
+		}
+
 	}
 }

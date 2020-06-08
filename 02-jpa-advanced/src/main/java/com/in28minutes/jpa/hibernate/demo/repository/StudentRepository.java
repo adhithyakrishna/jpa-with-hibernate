@@ -59,11 +59,17 @@ public class StudentRepository {
 
 	public void someOperationToUnderstandPersistenceContext() {
 	}
-
-	public void insertHardcodedStudentAndCourse() {
-	}
-
-	public void insertStudentAndCourse(Student student, Course course) {
+	
+	public void insertStudentAndCourse() {
+		Student student = new Student("krishna");
+		Course course = new Course("welcome to this world");
+		em.persist(student);
+		em.persist(course);
+		
+		student.addCourses(course);
+//		course.addStudents(student);
+		
+		em.persist(student);
 	}
 
 }
