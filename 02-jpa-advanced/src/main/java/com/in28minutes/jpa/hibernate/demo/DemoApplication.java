@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.repository.CourseRepository;
+import com.in28minutes.jpa.hibernate.demo.repository.StudentRepository;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -20,6 +21,9 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	private CourseRepository courseRepository;
 
+	@Autowired
+	private StudentRepository studentRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
@@ -27,12 +31,6 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 
-		Course course = courseRepository.findById(10001l);
-		logger.info("{}", course);
-		
-		courseRepository.deleteById(10003l);
-		
-		Course savedCourse = courseRepository.save(new Course(" hello world"));
-		logger.info("new added course {}", savedCourse);
+		studentRepository.saveStudentWithPassport();
 	}
 }
